@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090908">
+    <title>Happy Birthday, Opeyemi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --ink: #090908;
+            --navy: #14130f;
+            --plum: #2a1230;
+            --teal: #0f2f3a;
+            --gold: #d6b56f;
+            --gold-hi: #ebd49e;
+            --white: #f3f0e8;
+            --muted: #aaa69b;
+            --glass: rgba(255, 255, 255, .04);
+            --line: rgba(255, 255, 255, .1);
+            --serif: "Cormorant Garamond", Georgia, serif;
+            --sans: "Plus Jakarta Sans", Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--white);
+            background: var(--ink);
+            font-family: var(--sans)
+        }
+
+        button {
+            font: inherit
+        }
+
+        button:focus-visible,
+        .photo:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 4px
+        }
+
+        /* ---------- Background ---------- */
+        .bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 50% 0%, rgba(165, 128, 58, .13), transparent 42%),
+                radial-gradient(ellipse at 50% 100%, rgba(89, 66, 29, .1), transparent 48%),
+                linear-gradient(145deg, #080807 0%, #11100d 52%, #090908 100%)
+        }
+
+        .bg::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, .5) 100%)
+        }
+
+        /* ---------- Steps ---------- */
+        main {
+            position: relative;
+            z-index: 2
+        }
+
+        .step {
+            display: none;
+            min-height: 100svh;
+            padding: 64px 6%;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(12px)
+        }
+
+        .step.active {
+            display: flex
+        }
+
+        .step.visible {
+            animation: in .8s ease forwards
+        }
+
+        @keyframes in {
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .serif {
+            font-family: var(--serif);
+            font-weight: 500
+        }
+
+        .eyebrow {
+            color: var(--gold);
+            font-size: 12px;
+            letter-spacing: .22em;
+            text-transform: uppercase
+        }
+
+        .rule {
+            display: block;
+            width: 56px;
+            height: 1px;
+            background: var(--gold);
+            margin: 20px auto;
+            opacity: .7
+        }
+
+        .glass {
+            border: 1px solid var(--line);
+            background: var(--glass);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .35)
+        }
+
+        .wrap {
+            width: min(100%, 920px)
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 32px
+        }
+
+        .btn {
+            border: 1px solid var(--gold);
+            border-radius: 999px;
+            padding: 14px 26px;
+            color: var(--gold);
+            background: transparent;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            transition: .25s
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: var(--gold);
+            color: var(--ink)
+        }
+
+        .btn.primary {
+            background: var(--gold);
+            color: var(--ink)
+        }
+
+        .btn.primary:hover {
+            background: var(--gold-hi)
+        }
+
+        .btn.ghost {
+            border-color: var(--line);
+            color: var(--white)
+        }
+
+        .btn.ghost:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(214, 181, 111, .1)
+        }
+
+        /* Landing */
+        .landing {
+            width: min(100%, 520px);
+            padding: clamp(36px, 6vw, 64px) clamp(26px, 5vw, 48px);
+            border-radius: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .landing::before {
+            content: "";
+            position: absolute;
+            inset: 0 18% auto;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent)
+        }
+
+        .monogram {
+            width: 78px;
+            height: 78px;
+            margin: 0 auto 26px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            border: 1px solid rgba(214, 181, 111, .4);
+            font: italic 500 38px var(--serif);
+            color: var(--gold);
+            background: radial-gradient(circle, rgba(214, 181, 111, .12), transparent 70%)
+        }
+
+        .landing h1 {
+            font-size: clamp(46px, 8vw, 72px);
+            line-height: 1;
+            margin: 16px 0
+        }
+
+        .landing h1 em {
+            color: var(--gold);
+            font-style: italic
+        }
+
+        .landing p.lead {
+            max-width: 340px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.9;
+            font-weight: 300
+        }
+
+        /* Letter */
+        .hero {
+            text-align: center;
+            margin-bottom: 30px
+        }
+
+        .hero h2 {
+            font-size: clamp(44px, 7.5vw, 78px);
+            line-height: 1.04;
+            margin: 12px 0
+        }
+
+        .hero h2 em {
+            color: var(--gold);
+            font-style: italic
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 13px;
+            letter-spacing: .06em
+        }
+
+        .letter {
+            padding: clamp(26px, 5vw, 52px);
+            border-radius: 26px
+        }
+
+        .letter h3 {
+            color: var(--gold);
+            font-size: clamp(28px, 4vw, 36px);
+            margin-bottom: 22px
+        }
+
+        .letter p {
+            font-size: 15px;
+            line-height: 2;
+            font-weight: 300;
+            color: #e4e3e6;
+            max-width: 68ch
+        }
+
+        .letter p+p {
+            margin-top: 14px
+        }
+
+        .letter strong {
+            color: var(--gold-hi);
+            font-weight: 500
+        }
+
+        .sign {
+            margin-top: 28px;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .sign strong {
+            display: block;
+            color: var(--gold);
+            font: italic 500 34px var(--serif);
+            margin-top: 2px
+        }
+
+        /* Wishes */
+        .heading {
+            text-align: center;
+            margin-bottom: 34px
+        }
+
+        .heading h2 {
+            font-size: clamp(36px, 5.5vw, 54px);
+            margin: 10px 0
+        }
+
+        .heading p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.8
+        }
+
+        .wishes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border-radius: 24px;
+            overflow: hidden
+        }
+
+        .wish {
+            padding: 34px 28px;
+            border-right: 1px solid var(--line)
+        }
+
+        .wish:last-child {
+            border-right: 0
+        }
+
+        .wish h3 {
+            font-size: 30px;
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-style: italic
+        }
+
+        .wish p {
+            font-size: 14px;
+            line-height: 1.9;
+            font-weight: 300;
+            color: #d9d8dc
+        }
+
+        /* Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px
+        }
+
+        .photo {
+            position: relative;
+            aspect-ratio: 4/5;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--line);
+            background: linear-gradient(145deg, #1b1913, #100f0c);
+            isolation: isolate
+        }
+
+        .photo:nth-child(2),
+        .photo:nth-child(5) {
+            transform: translateY(18px)
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .7s ease
+        }
+
+        .photo:hover img {
+            transform: scale(1.06)
+        }
+
+        .photo::before {
+            content: "";
+            position: absolute;
+            inset: 50% 0 0;
+            z-index: 1;
+            background: linear-gradient(transparent, rgba(0, 0, 0, .65))
+        }
+
+        .photo span {
+            position: absolute;
+            left: 14px;
+            bottom: 12px;
+            z-index: 2;
+            font: italic 500 19px var(--serif);
+            color: #fff;
+            opacity: 0;
+            transform: translateY(5px);
+            transition: .3s
+        }
+
+        .photo:hover span,
+        .photo:focus-visible span {
+            opacity: 1;
+            transform: none
+        }
+
+        .photo.missing::after {
+            content: "Add photo";
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: var(--muted);
+            font-size: 12px;
+            letter-spacing: .1em
+        }
+
+        .gallery-pad {
+            height: 18px
+        }
+
+        /* Video + Finale */
+        .video-card {
+            width: min(100%, 820px);
+            padding: clamp(20px, 4vw, 36px);
+            border-radius: 26px;
+            text-align: center
+        }
+
+        .video-card h2 {
+            font-size: clamp(34px, 5vw, 48px);
+            margin: 8px 0
+        }
+
+        .video-card .sub {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 22px
+        }
+
+        video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 14px;
+            background: #030405
+        }
+
+        .finale {
+            width: min(100%, 700px);
+            padding: clamp(30px, 6vw, 62px);
+            border-radius: 30px;
+            text-align: center
+        }
+
+        .finale .star {
+            color: var(--gold);
+            font-size: 36px;
+            margin-bottom: 14px
+        }
+
+        .finale h2 {
+            font-size: clamp(44px, 7.5vw, 76px);
+            line-height: 1;
+            margin: 12px 0 18px
+        }
+
+        .finale h2 em {
+            color: var(--gold);
+            font-style: italic
+        }
+
+        .finale p {
+            color: #d6d6da;
+            font-size: 15px;
+            line-height: 1.95;
+            max-width: 480px;
+            margin: 0 auto;
+            font-weight: 300
+        }
+
+        .finale .signoff {
+            color: var(--gold);
+            font: italic 500 30px var(--serif);
+            margin-top: 24px
+        }
+
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 28px 16px 0;
+            color: #767a86;
+            font-size: 11px;
+            letter-spacing: .1em
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            padding: 24px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(2, 3, 6, .92);
+            backdrop-filter: blur(12px)
+        }
+
+        .lightbox.open {
+            display: flex;
+            animation: fade .2s ease
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0
+            }
+        }
+
+        .lightbox img {
+            max-width: min(100%, 1000px);
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, .6)
+        }
+
+        .lb-btn {
+            position: absolute;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            color: #fff;
+            background: #151821;
+            font-size: 22px;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .lb-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold)
+        }
+
+        .lb-close {
+            top: 20px;
+            right: 22px
+        }
+
+        .lb-prev {
+            left: 18px;
+            top: 50%
+        }
+
+        .lb-next {
+            right: 18px;
+            top: 50%
+        }
+
+        .lb-cap {
+            position: absolute;
+            bottom: 20px;
+            color: var(--muted);
+            font: italic 500 18px var(--serif);
+            text-align: center
+        }
+
+        @media(max-width:760px) {
+            .step {
+                padding: 44px 5%
+            }
+
+            .wishes {
+                grid-template-columns: 1fr
+            }
+
+            .wish {
+                border-right: 0;
+                border-bottom: 1px solid var(--line)
+            }
+
+            .wish:last-child {
+                border-bottom: 0
+            }
+
+            .gallery {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px
+            }
+
+            .photo:nth-child(2),
+            .photo:nth-child(5) {
+                transform: none
+            }
+
+            .photo:nth-child(even) {
+                transform: translateY(14px)
+            }
+
+            .photo span {
+                opacity: 1;
+                transform: none;
+                font-size: 16px
+            }
+
+            .lb-prev {
+                left: 8px
+            }
+
+            .lb-next {
+                right: 8px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+                scroll-behavior: auto !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg" aria-hidden="true"></div>
+
+    <main>
+        <section class="step active visible" id="step-landing" aria-labelledby="t1">
+            <div class="landing glass">
+                <div class="monogram" aria-hidden="true">O</div>
+                <p class="eyebrow">A little something for you</p>
+                <h1 class="serif" id="t1"><em>Opeyemi</em></h1>
+                <span class="rule"></span>
+                <p class="lead">A quiet celebration of your life, your journey and the good things still waiting for you
+                </p>
+                <div class="row"><button class="btn primary" type="button" data-next="step-letter">Open your
+                        surprise</button></div>
+            </div>
+        </section>
+
+        <section class="step" id="step-letter" aria-labelledby="t2">
+            <div class="wrap">
+                <header class="hero">
+                    <p class="eyebrow">A new chapter begins</p>
+                    <h2 class="serif" id="t2">Happy Birthday<br><em>Opeyemi</em></h2>
+                    <p>Wishing you a beautiful year ahead</p>
+                </header>
+                <article class="letter glass">
+                    <h3 class="serif">A birthday letter</h3>
+                    <p>Meeting you was written in the stars and sometimes I still find it hard to believe that something
+                        so beautiful began with such a simple question. It feels like yesterday when you walked up to me
+                        and asked, “Are you going for tutorial?” Little did I know that one simple question would be the
+                        beginning of a beautiful journey, a friendship and a bond that has become so special to me
+                        ❤️🥹</p>
+                    <p>Thank you for being my friend, for being someone I can share my
+                        laughter with, for making ordinary days feel extraordinary and for bringing so much light into
+                        my life without even trying. Thank you for the memories we’ve made, the little moments that mean
+                        more than words can explain and for being the beautiful soul that you are</p>
+                    <p>I know I promised to make your day special and I wish so badly that I could be right there
+                        beside you to celebrate you, hug you tightly, make you laugh and remind you in person of just
+                        how much you mean to me. But trust me, me not being physically present with you doesn't make
+                        today any less special, because you deserve to be celebrated in every possible way. So please,
+                        eat to your heart’s content, dress up beautifully, take all the pictures, party, laugh, dance
+                        and enjoy your day to the fullest my love. Don't let anything steal your happiness today. You
+                        deserve every beautiful thing this life has to offer❤️🎂🥂</p>
+                    <p>And beyond today, I pray that life gives you a thousand reasons to smile. May you never have to
+                        beg for the love you freely give to others. May your heart always find peace, may your dreams
+                        become your reality and may you walk into rooms where your presence is appreciated, your
+                        efforts are recognised and your heart is treated with the tenderness it deserves. May this new
+                        chapter bring you unexpected blessings, beautiful opportunities, genuine happiness and the kind
+                        of love that makes you feel safe, valued and cherished</p>
+                    <p>I hope you never forget how special you are, not just to me but to everyone lucky enough to know
+                        you. You have a beautiful way of making life sweeter and I hope life returns that sweetness to
+                        you in countless ways. You deserve happiness that doesn't fade when the celebrations are over,
+                        love that shows up even on your difficult days and friendships that remain beautiful through
+                        every season of life</p>
+                    <p>Thank you for allowing me to be part of your world. Thank you for every
+                        moment, every laugh, every conversation and every memory that has made this journey worth it.
+                        If I could go back to that day when you walked up to me and asked if I was going to tutorial, I
+                        would choose that moment all over again, because it led me to YOU and that is one of the most
+                        beautiful things life has given me🥹❤️</p>
+                    <p>Happy birthday to my beautiful girl, my love, my friend and one of the sweetest gifts life has
+                        given me. May this new age be softer, brighter, kinder and more beautiful than you ever
+                        imagined. May you flourish in everything you do and may your smile never lose its light.</p>
+                    <p><strong>I love you more than these words can fully express and I'm so grateful that our paths
+                            crossed. Here's to you, to your beautiful life, to more memories, more laughter, more
+                            adventures and to a friendship I will always treasure. Happy birthday my love. Go and
+                            shine like the star you are</strong> 🥹❤️🎉💕</p>
+                </article>
+                <div class="row">
+                    <button class="btn ghost" type="button" data-prev="step-landing">Back</button>
+                    <button class="btn primary" type="button" data-next="step-wishes">Continue</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="step" id="step-wishes" aria-labelledby="t3">
+            <div class="wrap">
+                <header class="heading">
+                    <p class="eyebrow">For the year ahead</p>
+                    <h2 class="serif" id="t3">Three wishes for you</h2>
+                    <span class="rule"></span>
+                </header>
+                <div class="wishes glass">
+                    <div class="wish">
+                        <h3 class="serif">Peace</h3>
+                        <p>A calm mind, a steady heart and the quiet confidence that you are exactly where you need to
+                            be.</p>
+                    </div>
+                    <div class="wish">
+                        <h3 class="serif">Progress</h3>
+                        <p>Doors that open at the right time and the strength to walk through them with your head high.
+                        </p>
+                    </div>
+                    <div class="wish">
+                        <h3 class="serif">Joy</h3>
+                        <p>Laughter that comes easily, people who feel like home and moments you will want to remember.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn ghost" type="button" data-prev="step-letter">Back</button>
+                    <button class="btn primary" type="button" data-next="step-photos">Beautiful pictures of you baby</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="step" id="step-photos" aria-labelledby="t4">
+            <div class="wrap">
+                <header class="heading">
+                    <p class="eyebrow">Little moments, lasting memories</p>
+                    <span class="rule"></span>
+                </header>
+                <!-- Gallery photos are stored in ./images/ as photo-1.png ... photo-6.png. -->
+                <div class="gallery">
+                    <div class="photo" tabindex="0" role="button" aria-label="View photo 1"
+                        data-caption="A moment to keep"><img src="./images/photo-1.png" alt="Memory 1"
+                            loading="lazy"><span>A moment to keep</span></div>
+                    <div class="photo" tabindex="0" role="button" aria-label="View photo 2" data-caption="Good times">
+                        <img src="./images/photo-2.png" alt="Memory 2" loading="lazy"><span>Good times</span></div>
+                    <div class="photo" tabindex="0" role="button" aria-label="View photo 3"
+                        data-caption="One for the memories"><img src="./images/photo-3.png" alt="Memory 3"
+                            loading="lazy"><span>One for the memories</span></div>
+                    <div class="photo" tabindex="0" role="button" aria-label="View photo 4" data-caption="Simply happy">
+                        <img src="./images/photo-4.png" alt="Memory 4" loading="lazy"><span>Simply happy</span></div>
+                    <div class="photo" tabindex="0" role="button" aria-label="View photo 5"
+                        data-caption="Unforgettable"><img src="./images/photo-5.png" alt="Memory 5"
+                            loading="lazy"><span>Unforgettable</span></div>
+                    <div class="photo" tabindex="0" role="button" aria-label="View photo 6"
+                        data-caption="Here’s to more"><img src="./images/photo-6.png" alt="Memory 6"
+                            loading="lazy"><span>Here’s to more</span></div>
+                </div>
+                <div class="gallery-pad"></div>
+                <div class="row">
+                    <button class="btn ghost" type="button" data-prev="step-wishes">Back</button>
+                    <button class="btn primary" type="button" data-next="step-video">Watch the recap</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="step" id="step-video" aria-labelledby="t5">
+            <div class="video-card glass">
+                <p class="eyebrow">Press play and relive it</p>
+                <h2 class="serif" id="t5">A Quick Recap</h2>
+                <p class="sub">Some moments deserve to be experienced more than once.</p>
+                <video controls playsinline preload="metadata" id="video">
+                    <source src="./videoes/IMG_3527.mp4" type="video/mp4">Your browser does not support the video tag.
+                </video>
+                <div class="row">
+                    <button class="btn ghost" type="button" data-prev="step-photos">Back</button>
+                    <button class="btn primary" type="button" data-next="step-finale">Celebrate with me</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="step" id="step-finale" aria-labelledby="t6">
+            <div class="finale glass">
+                <div class="star" aria-hidden="true">✦</div>
+                <p class="eyebrow">Here’s to your next chapter</p>
+                <h2 class="serif" id="t6">Happy Birthday<br><em>Opeyemi</em></h2>
+                <span class="rule"></span>
+                <p>May the year ahead bring you reasons to smile, opportunities to grow, peace in your heart and
+                    beautiful moments you will always remember. Keep becoming the person you hope to be.</p>
+                <p class="signoff">With care, Oyindamola</p>
+                <div class="row">
+                    <button class="btn ghost" type="button" id="replay">Replay</button>
+                </div>
+            </div>
+           
+        </section>
+    </main>
+
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded photo">
+        <button class="lb-btn lb-close" id="lbClose" type="button" aria-label="Close photo">×</button>
+        <button class="lb-btn lb-prev" id="lbPrev" type="button" aria-label="Previous photo">‹</button>
+        <img id="lbImg" src="" alt="">
+        <button class="lb-btn lb-next" id="lbNext" type="button" aria-label="Next photo">›</button>
+        <p class="lb-cap" id="lbCap"></p>
+    </div>
+
+    <script>
+        const steps = [...document.querySelectorAll(".step")];
+        const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function show(id) {
+            const next = document.getElementById(id), cur = document.querySelector(".step.active");
+            if (!next || cur === next) return;
+            cur.classList.remove("visible", "active");
+            next.classList.add("active"); void next.offsetWidth; next.classList.add("visible");
+            scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+            const v = document.getElementById("video"); if (id !== "step-video" && !v.paused) v.pause();
+        }
+        document.querySelectorAll("[data-next]").forEach(b => b.addEventListener("click", () => show(b.dataset.next)));
+        document.querySelectorAll("[data-prev]").forEach(b => b.addEventListener("click", () => show(b.dataset.prev)));
+        document.getElementById("replay").addEventListener("click", () => {
+            const v = document.getElementById("video"); v.pause(); v.currentTime = 0; show("step-landing");
+        });
+
+        /* Lightbox with previous / next */
+        const lb = document.getElementById("lightbox"), lbImg = document.getElementById("lbImg"), lbCap = document.getElementById("lbCap");
+        const photos = [...document.querySelectorAll(".photo")]; let cur = 0;
+        function openAt(i) {
+            cur = (i + photos.length) % photos.length;
+            const p = photos[cur], img = p.querySelector("img");
+            lbImg.src = img.src; lbImg.alt = img.alt; lbCap.textContent = p.dataset.caption;
+            lb.classList.add("open"); document.body.style.overflow = "hidden";
+        }
+        function closeLb() { lb.classList.remove("open"); document.body.style.overflow = ""; lbImg.src = ""; photos[cur].focus(); }
+        photos.forEach((p, i) => {
+            p.addEventListener("click", () => { if (!p.classList.contains("missing")) openAt(i); });
+            p.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); p.click(); } });
+            p.querySelector("img").addEventListener("error", () => { p.classList.add("missing"); console.warn("Could not load image:", p.querySelector("img").getAttribute("src")); });
+        });
+        document.getElementById("lbClose").addEventListener("click", closeLb);
+        document.getElementById("lbPrev").addEventListener("click", () => openAt(cur - 1));
+        document.getElementById("lbNext").addEventListener("click", () => openAt(cur + 1));
+        lb.addEventListener("click", e => { if (e.target === lb) closeLb(); });
+        document.addEventListener("keydown", e => {
+            if (!lb.classList.contains("open")) return;
+            if (e.key === "Escape") closeLb();
+            if (e.key === "ArrowLeft") openAt(cur - 1);
+            if (e.key === "ArrowRight") openAt(cur + 1);
+        });
+
+    </script>
+</body>
+
+</html>
